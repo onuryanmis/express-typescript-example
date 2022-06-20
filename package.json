@@ -6,7 +6,8 @@
         "build": "npx tsc",
         "start": "node dist/app.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "typeorm": "typeorm-ts-node-commonjs"
     },
     "keywords": [],
     "author": "Onur Yanmış",
@@ -32,9 +33,11 @@
         "mongoose": "^6.4.0",
         "morgan": "^1.10.0",
         "multer": "^1.4.5-lts.1",
+        "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
         "routing-controllers": "^0.8.1",
         "typedi": "^0.10.0",
+        "typeorm": "^0.3.6",
         "winston": "^3.7.2"
     }
 }
