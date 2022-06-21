@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from "typeorm"
 
 @Entity()
 export class Category {
@@ -13,4 +13,10 @@ export class Category {
 
     @Column()
     isActive: boolean
+
+    @CreateDateColumn()
+    createdDate: Date
+
+    @UpdateDateColumn()
+    updatedDate: Date
 }
