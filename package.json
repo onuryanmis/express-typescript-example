@@ -7,7 +7,12 @@
         "start": "node dist/app.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "typeorm": "typeorm-ts-node-commonjs"
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./src/config/AppDataSource.ts",
+        "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create",
+        "migration:generate": "npm run typeorm -- migration:generate",
+        "migration:run": "npm run typeorm migration:run",
+        "migration:revert": "npm run typeorm migration:revert",
+        "schema:sync": "npm run typeorm schema:sync"
     },
     "keywords": [],
     "author": "Onur Yanmış",
@@ -21,6 +26,7 @@
         "concurrently": "^7.2.2",
         "nodemon": "^2.0.16",
         "ts-node": "^10.8.1",
+        "tsconfig-paths": "^4.0.0",
         "typescript": "^4.7.4"
     },
     "dependencies": {
