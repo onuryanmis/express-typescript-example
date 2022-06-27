@@ -1,6 +1,8 @@
 import {DataSource} from "typeorm"
 import dotenv from "dotenv";
 import { cwd, env } from 'process';
+import {Category} from "../entity/Category";
+import {Content} from "../entity/Content";
 
 dotenv.config();
 
@@ -11,10 +13,10 @@ const AppDataSource = new DataSource({
     username: env.MYSQL_USERNAME,
     password: env.MYSQL_PASSWORD,
     database: "express_typescript_database",
-    entities: [cwd() + '/dist/entity/*.js'],
+    entities: [Category, Content],
     migrations: [cwd() + '/dist/migration/*.js'],
+    subscribers: [cwd() + '/dist/subscriber/*.js'],
     migrationsTableName: 'migrations',
-    logging: true,
     synchronize: true,
 })
 

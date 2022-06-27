@@ -42,6 +42,7 @@
         "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
         "routing-controllers": "^0.8.1",
+        "slugify": "^1.6.5",
         "typedi": "^0.10.0",
         "typeorm": "^0.3.6",
         "winston": "^3.7.2"
