@@ -1,4 +1,6 @@
-export class SuccessResponse {
+import {ResponseInterface} from '../interfaces/ResponseInterface';
+
+export class SuccessResponse implements ResponseInterface{
     private message: string;
     private data: object|null;
 

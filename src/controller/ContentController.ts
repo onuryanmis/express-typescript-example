@@ -1,11 +1,22 @@
-import {Body, Delete, Get, InternalServerError, JsonController, Param, Post, Put} from 'routing-controllers';
-import {CrudService} from "../service/CrudService";
-import Logger from "../library/LoggerLibrary";
-import {SuccessResponse} from "../response/SuccessResponse";
-import {Content} from "../entity/Content";
-import {ContentRepository} from "../repository/ContentRepository";
+import {
+    Authorized,
+    Body,
+    Delete,
+    Get,
+    InternalServerError,
+    JsonController,
+    Param,
+    Post,
+    Put
+} from 'routing-controllers';
+import {CrudService} from '../service/CrudService';
+import Logger from '../library/LoggerLibrary';
+import {SuccessResponse} from '../response/SuccessResponse';
+import {Content} from '../entity/Content';
+import {ContentRepository} from '../repository/ContentRepository';
+import {ResponseInterface} from '../interfaces/ResponseInterface';
 
-@JsonController("/content")
+@JsonController('/content')
 export class ContentController {
     @Get('/')
     public async index(): Promise<Content[]> {
@@ -15,14 +26,15 @@ export class ContentController {
     }
 
     @Get('/:id')
-    public async detail(@Param("id") id: number): Promise<Content | null> {
+    public async detail(@Param('id') id: number): Promise<Content | null> {
         return CrudService.notFoundChecker(
             await ContentRepository.findOneByIdWithCategory(id)
         );
     }
 
+    @Authorized()
     @Post('/')
-    public async create(@Body() requestBody: Content): Promise<SuccessResponse> {
+    public async create(@Body() requestBody: Content): Promise<ResponseInterface> {
         try {
             await ContentRepository.save(requestBody)
             return new SuccessResponse('Content successfully added - #' + requestBody.id);
@@ -32,8 +44,9 @@ export class ContentController {
         }
     }
 
+    @Authorized()
     @Put('/:id')
-    public async update(@Param("id") id: number, @Body() requestBody: Content): Promise<SuccessResponse> {
+    public async update(@Param('id') id: number, @Body() requestBody: Content): Promise<ResponseInterface> {
         const content = await CrudService.findOrNotFound(Content, {id});
         try {
             await ContentRepository.update(content.id, requestBody)
@@ -44,8 +57,9 @@ export class ContentController {
         }
     }
 
+    @Authorized()
     @Delete('/:id')
-    public async remove(@Param("id") id: number): Promise<SuccessResponse> {
+    public async remove(@Param('id') id: number): Promise<ResponseInterface> {
         const content = await CrudService.findOrNotFound(Content, {id});
         try {
             await ContentRepository.remove(content);

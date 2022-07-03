@@ -1,11 +1,22 @@
-import {Body, Delete, Get, InternalServerError, JsonController, Param, Post, Put} from 'routing-controllers';
-import {Category} from "../entity/Category";
-import {CrudService} from "../service/CrudService";
-import Logger from "../library/LoggerLibrary";
-import {SuccessResponse} from "../response/SuccessResponse";
-import {CategoryRepository} from "../repository/CategoryRepository";
+import {
+    Authorized,
+    Body,
+    Delete,
+    Get,
+    InternalServerError,
+    JsonController,
+    Param,
+    Post,
+    Put
+} from 'routing-controllers';
+import {Category} from '../entity/Category';
+import {CrudService} from '../service/CrudService';
+import Logger from '../library/LoggerLibrary';
+import {SuccessResponse} from '../response/SuccessResponse';
+import {CategoryRepository} from '../repository/CategoryRepository';
+import {ResponseInterface} from '../interfaces/ResponseInterface';
 
-@JsonController("/category")
+@JsonController('/category')
 export class CategoryController {
     @Get('/')
     public async index(): Promise<Category[]> {
@@ -13,12 +24,13 @@ export class CategoryController {
     }
 
     @Get('/:id')
-    public async detail(@Param("id") id: number): Promise<Category> {
+    public async detail(@Param('id') id: number): Promise<Category> {
         return await CrudService.findOrNotFound(Category, {id});
     }
 
+    @Authorized()
     @Post('/')
-    public async create(@Body() requestBody: Category): Promise<SuccessResponse> {
+    public async create(@Body() requestBody: Category): Promise<ResponseInterface> {
         try {
             await CategoryRepository.save(requestBody)
             return new SuccessResponse('Category successfully added - #' + requestBody.id);
@@ -28,8 +40,9 @@ export class CategoryController {
         }
     }
 
+    @Authorized()
     @Put('/:id')
-    public async update(@Param("id") id: number, @Body() requestBody: Category): Promise<SuccessResponse> {
+    public async update(@Param('id') id: number, @Body() requestBody: Category): Promise<ResponseInterface> {
         const category = await CrudService.findOrNotFound(Category, {id});
         try {
             await CategoryRepository.update(category.id, requestBody)
@@ -40,8 +53,9 @@ export class CategoryController {
         }
     }
 
+    @Authorized()
     @Delete('/:id')
-    public async remove(@Param("id") id: number): Promise<SuccessResponse> {
+    public async remove(@Param('id') id: number): Promise<ResponseInterface> {
         const category = await CrudService.findOrNotFound(Category, {id});
         try {
             await CategoryRepository.remove(category);

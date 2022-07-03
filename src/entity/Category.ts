@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany} from "typeorm"
-import {IsBoolean, IsNotEmpty, IsOptional, MaxLength} from "class-validator";
-import {Content} from "./Content";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm'
+import {IsBoolean, IsNotEmpty, IsOptional, MaxLength} from 'class-validator';
+import {Content} from './Content';
 
 @Entity()
 export class Category {
@@ -9,12 +9,12 @@ export class Category {
 
     @IsNotEmpty()
     @MaxLength(100)
-    @Column({length: "100"})
+    @Column({length: '100'})
     title: string
 
     @IsOptional()
     @MaxLength(250)
-    @Column({length: "250"})
+    @Column({length: '250'})
     description: string
 
     @OneToMany(() => Content, (content) => content.category)

@@ -1,6 +1,6 @@
-import {EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent} from "typeorm";
-import {Content} from "../entity/Content";
-import slugify from "slugify";
+import {EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent} from 'typeorm';
+import {Content} from '../entity/Content';
+import slugify from 'slugify';
 
 @EventSubscriber()
 export class PostSubscriber implements EntitySubscriberInterface<Content> {
