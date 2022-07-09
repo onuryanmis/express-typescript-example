@@ -13,7 +13,7 @@ const AppDataSource = new DataSource({
     port: parseInt(env.MYSQL_PORT + ''),
     username: env.MYSQL_USERNAME,
     password: env.MYSQL_PASSWORD,
-    database: 'express_typescript_database',
+    database: env.MYSQL_DATABASE,
     entities: [Category, Content, User],
     migrations: [cwd() + '/dist/migration/*.js'],
     subscribers: [cwd() + '/dist/subscriber/*.js'],

@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+    mysql-db:
+        build:
+            context: .
+            dockerfile: docker/mysql/Dockerfile
+        restart: unless-stopped
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+        ports:
+            - "3306:3306"
+        volumes:
+            - db:/var/lib/mysql
+    redis-client:
+        build:
+            context: .
+            dockerfile: docker/redis/Dockerfile
+        restart: unless-stopped
+        ports:
+            - "6379:6379"
+        volumes:
+            - cache:/data
+    app:
+        build:
+            context: .
+            dockerfile: docker/nodejs/Dockerfile
+        volumes:
+            - ./:/home/node/app/
+        ports:
+            - "3000:3000"
+        depends_on:
+            - mysql-db
+            - redis-client
+volumes:
+    db:
+    cache:
